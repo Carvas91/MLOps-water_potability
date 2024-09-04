@@ -8,7 +8,7 @@ app = FastAPI(
     description='Predicting water potability',
     )
 
-with open(r'C:\Users\carva\OneDrive\Desktop\water_potability_MLOps_project\model.pkl', 'rb') as file:
+with open('model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 
