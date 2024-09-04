@@ -111,7 +111,6 @@ pyOpenSSL==24.1.0
 pyparsing==3.1.4
 python-dateutil==2.9.0.post0
 pytz==2024.1
-pywin32==306
 PyYAML==6.0.2
 pyzmq==26.1.0
 queuelib==1.6.2
