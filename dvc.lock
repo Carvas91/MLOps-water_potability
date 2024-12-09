@@ -5,8 +5,11 @@ stages:
     deps:
     - path: src/data_collection.py
       hash: md5
-      md5: b72edf7ca55caf7cfd4a3b088b5c580d
-      size: 550
+      md5: 128f8e57ec8b499dda803e252f9bc99d
+      size: 546
+    params:
+      params.yaml:
+        data_collection.test_size: 0.2
     outs:
     - path: data/raw
       hash: md5

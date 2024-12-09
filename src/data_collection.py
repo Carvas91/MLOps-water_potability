@@ -7,7 +7,7 @@ import yaml
 
 data = pd.read_csv('./water_potability.csv')
 
-test_size = yaml.safe_load(open("./src/params.yaml"))["data_collection"]["test_size"]
+test_size = yaml.safe_load(open("./params.yaml"))["data_collection"]["test_size"]
 
 train_data, test_data = train_test_split(data, test_size=test_size, random_state=41)
 
