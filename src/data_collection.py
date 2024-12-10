@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import yaml
 
 
-data = pd.read_csv('./water_potability.csv')
+
 
 def load_params(filepath: str)-> float:
     with open (filepath, 'r') as file:
@@ -13,9 +13,24 @@ def load_params(filepath: str)-> float:
         return params["data_collection"]["test_size"]
 #test_size = yaml.safe_load(open("./params.yaml"))["data_collection"]["test_size"]
 
-train_data, test_data = train_test_split(data, test_size=test_size, random_state=41)
+def load_data(filepath: str)-> pd.DataFrame:
+    return pd.read_csv(filepath)
+#data = pd.read_csv('./water_potability.csv')
 
-data_path = os.path.join("data","raw")
+
+def split_data(data: pd.DataFrame, test_size: float)-> tuple[pd.DataFrame,pd.DataFrame]:
+    return train_test_split(data, test_size=test_size, random_state=41)
+#train_data, test_data = train_test_split(data, test_size=test_size, random_state=41)
+
+def save_data(df: pd.DataFrame, filepath: str)-> None:
+    df.to_csv(filepath, index=False)
+
+def main():
+    data_filepath = './water_potability.csv'
+    params_filepath = './params.yaml'
+    raw_data_path =  os.path.join("data","raw")
+
+#data_path = os.path.join("data","raw")
 
 os.makedirs(data_path)
 
