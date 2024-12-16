@@ -31,13 +31,28 @@ def save_data(df:pd.DataFrame, filepath:str)->None:
 #test_processed_data = fill_missing_with_median(test_data)
 
 def main():
-    raw_data_path = 
+    try:
+        raw_data_path = "./data/raw"
+        processed_data_path = "./data/processed"
 
-data_path = os.path.join("data", "processed")
+        train_data = load_data(os.path.join(raw_data_path,"train.csv"))
+        test_data = load_data(os.path.join(raw_data_path,"test.csv"))
 
-os.makedirs(data_path)
+        train_processed_data = fill_missing_with_median(train_data)
+        test_processed_data = fill_missing_with_median(test_data)
 
-train_processed_data.to_csv(os.path.join(data_path, "train_processed.csv"), index=False)
-test_processed_data.to_csv(os.path.join(data_path, "test_processed.csv"), index=False)
+        os.makedirs(processed_data_path)
+        save_data(train_processed_data, os.path.join(processed_data_path, "train_processed.csv"))
+        save_data(test_processed_data, os.path.join(processed_data_path, "test_processed.csv")) 
+    except Exception as e:
+        raise Exception(f"Erro executing main function: {e}")
+
+if __name__ == "__main__":
+    main()
+
+
+
+#train_processed_data.to_csv(os.path.join(data_path, "train_processed.csv"), index=False)
+#test_processed_data.to_csv(os.path.join(data_path, "test_processed.csv"), index=False)
 
 
