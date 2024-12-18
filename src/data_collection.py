@@ -61,6 +61,5 @@ if __name__ == "__main__":
 #data_path = os.path.join("data","raw")
 
 #os.makedirs(data_path)
-
 #train_data.to_csv(os.path.join(data_path,"train.csv"),index = False)
 #test_data.to_csv(os.path.join(data_path,"test.csv"),index=False)
