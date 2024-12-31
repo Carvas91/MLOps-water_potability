@@ -29,7 +29,7 @@ def prepare_data(data: pd.DataFrame)->tuple[pd.DataFrame, pd.Series]:
 #with open("model.pkl", "rb") as file:
 #    model = pickle.load(file)
 
-def load_model(file_path: str)-> RandomForestClassifier:
+def load_model(file_path: str):
     try:
         with open(file_path, 'rb') as file:
             model = pickle.load(file)
@@ -58,5 +58,26 @@ def evaluation_model(model, X_test:pd.DataFrame,y_test:pd.Series )-> dict:
     except Exception as e:
         raise Exception(f'Error avaluating the model: {e}')
 
-with open("metrics.json", "w") as file:
-    json.dump(metrics_dict, file, indent=4)
+def save_metrics(metrics_dict:dict, file_path: str)->None:
+    try:
+        with open("metrics.json", "w") as file:
+            json.dump(metrics_dict, file, indent=4)
+    except Exception as e:
+        Exception(f'Error saving matrics to {file_path}: {e}')
+
+
+def main():
+    try:
+        test_data_path = './data/processed/test_processed.csv'
+        model_path = 'model.pkl'
+        metrics_path = 'metrics.json'
+        test_data = load_data(test_data_path)
+        X_test, y_test = prepare_data(test_data)
+        model = load_model(model_path)
+        metrics = evaluation_model(model, X_test, y_test)
+        save_metrics(metrics, metrics_path)
+    except Exception as e:
+        raise Exception(f'Error in main function {e}')
+
+if __name__ == '__main__':
+    main()
