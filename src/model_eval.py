@@ -6,15 +6,41 @@ import json
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-test_data = pd.read_csv('./data/processed/test_processed.csv')
+def load_data(file_path: str)-> pd.DataFrame:
+    try:
+        return pd.read_csv(file_path)
+    except Exception as e:
+        raise Exception(f'Error loading data file {file_path}: {e}')
 
-X_test = test_data.iloc[:,0:-1].values
-y_test = test_data.iloc[:,-1].values
+#test_data = pd.read_csv('./data/processed/test_processed.csv')
 
-with open("model.pkl", "rb") as file:
-    model = pickle.load(file)
+#X_test = test_data.iloc[:,0:-1].values
+#y_test = test_data.iloc[:,-1].values
 
-y_pred = model.predict(X_test)
+def prepare_data(data: pd.DataFrame)->tuple[pd.DataFrame, pd.Series]:
+    try:
+        X = data.drop(columns=['Potability'], axis=1)
+        y = data['Potability']
+        return X, y
+    except Exception as e:
+        raise Exception(f'Error preparing data {e}')
+
+
+#with open("model.pkl", "rb") as file:
+#    model = pickle.load(file)
+
+def load_model(file_path: str)-> RandomForestClassifier:
+    try:
+        with open(file_path, 'rb') as file:
+            model = pickle.load(file)
+        return model
+    except Exception as e:
+        raise Exception(f'Error loading model from path {file_path}: {e}')
+
+
+
+#y_pred = model.predict(X_test)
+
 
 acc = accuracy_score(y_test, y_pred)
 pre = precision_score(y_test,y_pred)
