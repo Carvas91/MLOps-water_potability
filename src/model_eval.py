@@ -38,21 +38,25 @@ def load_model(file_path: str)-> RandomForestClassifier:
         raise Exception(f'Error loading model from path {file_path}: {e}')
 
 
+def evaluation_model(model, X_test:pd.DataFrame,y_test:pd.Series )-> dict:
+    try:
+        y_pred = model.predict(X_test)
 
-#y_pred = model.predict(X_test)
+        acc = accuracy_score(y_test, y_pred)
+        pre = precision_score(y_test,y_pred)
+        recall = recall_score(y_test,y_pred)
+        f1score = f1_score(y_test,y_pred)
 
+        metrics_dict = {
+            "acc": acc,
+            "precision":pre,
+            "recall": recall,
+            "f1 score": f1score
+        }
 
-acc = accuracy_score(y_test, y_pred)
-pre = precision_score(y_test,y_pred)
-recall = recall_score(y_test,y_pred)
-f1score = f1_score(y_test,y_pred)
-
-metrics_dict = {
-    "acc": acc,
-    "precision":pre,
-    "recall": recall,
-    "f1 score": f1score
-}
+        return metrics_dict
+    except Exception as e:
+        raise Exception(f'Error avaluating the model: {e}')
 
 with open("metrics.json", "w") as file:
     json.dump(metrics_dict, file, indent=4)
